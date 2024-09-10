@@ -13,6 +13,9 @@
         android:theme="@style/Theme.CarProject"
         tools:targetApi="31">
         <activity
+            android:name=".LoginInterface"
+            android:exported="false" />
+        <activity
             android:name=".CarListView"
             android:exported="true">
             <intent-filter>
