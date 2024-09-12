@@ -13,10 +13,13 @@
         android:theme="@style/Theme.CarProject"
         tools:targetApi="31">
         <activity
-            android:name=".CarListView"
+            android:name=".view.RegisterInterface"
             android:exported="false" />
         <activity
-            android:name=".LoginInterface"
+            android:name=".view.CarListView"
+            android:exported="false" />
+        <activity
+            android:name=".view.LoginInterface"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,9 +28,7 @@
             </intent-filter>
         </activity>
 
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+
     </application>
 
 </manifest>
