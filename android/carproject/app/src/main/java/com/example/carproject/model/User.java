@@ -1,10 +1,14 @@
 package com.example.carproject.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Objects;
 
 public class User {
 
+    @SerializedName("email")
     private String email; // email do usuário - é chave primária no banco
+    @SerializedName("password")
     private String password; // password de acesso
 
     public User() {

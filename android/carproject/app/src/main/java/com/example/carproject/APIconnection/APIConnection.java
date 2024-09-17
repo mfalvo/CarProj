@@ -1,6 +1,5 @@
 package com.example.carproject.APIconnection;
 
-
 import com.example.carproject.model.User;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -12,20 +11,13 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
-
 public class APIConnection {
+    // URL  base do servidor  backend
+    private String urlBase = "http://localhost:8080/";
+    // Objeto RequestUser responsável pelas requisições ao servidor
+    private RequestUser requestUser;
 
-    interface RequestUser {
-        @GET("api/users/{uid}")
-        Call<User> getUser(@Path("uid") String id);
-        @POST("/api/users")
-        Call<String> createUser(@Body User user);
-    }
-
-    String urlBase = "https://localhost:8080";
-    RequestUser requestUser;
-
-    // Construtor da classe APIConnection
+    // Construtor do objeto de conexão ao servidor de backend
     public APIConnection() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(urlBase)
@@ -34,26 +26,35 @@ public class APIConnection {
         requestUser = retrofit.create(RequestUser.class);
     }
 
-
-
-
-    // UserData
-    public interface FindUserCallback {
-        void onSuccess(User user);
-        void onFailure(Throwable t);
+    // Define os pontos de acesso ao servidor de backend
+    interface RequestUser {
+        @POST("user/login")
+        Call<User> loginUser(@Body User user);
+        //@POST("user/users")
+        //Call<String> createUser(@Body User user);
     }
-    public void getUser(String id, FindUserCallback findUserCallback){
-        requestUser.getUser(id).enqueue(new Callback<User>() {
+
+    //Método para verificar o login do usuário
+    public void loginUser(User user, LoginUserCallback logedUserCallback){
+        requestUser.loginUser(user).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response)
-            {   findUserCallback.onSuccess(response.body()); }
+            {
+                logedUserCallback.onSuccess(response.body()); }
             @Override
             public void onFailure(Call<User> call, Throwable t)
-            {   findUserCallback.onFailure(new Exception("Request failed")); }}
+            {
+                logedUserCallback.onFailure(new Exception("Request failed")); }}
         );
     }
 
+    public interface LoginUserCallback {
+        void onSuccess(User user);
+        void onFailure(Throwable t);
+    }
 
+
+    /*
     public interface NewUserCallback {
         void onSuccess(String retorno);
         void onFailure(Throwable t);
@@ -75,5 +76,5 @@ public class APIConnection {
 
     }
 
-
+    */
 }
