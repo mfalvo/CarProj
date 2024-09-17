@@ -16,6 +16,7 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user) {
         User foundUser = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
