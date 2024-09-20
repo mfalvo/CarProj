@@ -13,7 +13,7 @@ import retrofit2.http.Path;
 
 public class APIConnection {
     // URL  base do servidor  backend
-    private String urlBase = "http://localhost:8080/";
+    private String urlBase = "https://127.0.0.1:8443/";
     // Objeto RequestUser responsável pelas requisições ao servidor
     private RequestUser requestUser;
 
@@ -28,7 +28,7 @@ public class APIConnection {
 
     // Define os pontos de acesso ao servidor de backend
     interface RequestUser {
-        @POST("user/login")
+        @POST("/user/login")
         Call<User> loginUser(@Body User user);
         //@POST("user/users")
         //Call<String> createUser(@Body User user);

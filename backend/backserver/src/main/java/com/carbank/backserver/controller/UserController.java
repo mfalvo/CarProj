@@ -1,5 +1,7 @@
 package com.carbank.backserver.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +18,21 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@GetMapping("/byid/{id}")
+	public User findByEmail(@PathVariable String id){
+		User founded = userRepository.findById(id).orElse(null);
+		 if (founded != null)
+	        {
+	            return founded;
+	        } else 
+	        {
+	            return null;
+	        }
+
+		
+	}
+	
+	
 	@PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user) {
         User foundUser = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
