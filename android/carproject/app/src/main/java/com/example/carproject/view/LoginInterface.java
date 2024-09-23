@@ -1,7 +1,6 @@
 package com.example.carproject.view;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -12,7 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 
-import com.example.carproject.APIconnection.APIConnection;
+import com.example.carproject.controller.APIConnection;
 import com.example.carproject.model.User;
 import com.example.carproject.R;
 
