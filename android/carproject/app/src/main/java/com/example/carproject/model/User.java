@@ -5,18 +5,25 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Objects;
 
 public class User {
-
-    @SerializedName("email")
     private String email; // email do usuário - é chave primária no banco
-    @SerializedName("password")
     private String password; // password de acesso
+    private String name; // nome do usuário
 
     public User() {
     }
 
-    public User(String email, String password) {
+    public User(String email, String password, String name) {
         this.email = email;
         this.password = password;
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -51,8 +58,8 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+                "email='" + this.email + '\'' +
+                ", password='" + this.password + '\'' +
+                ", name='" + this.name + '}';
     }
 }

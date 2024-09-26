@@ -13,6 +13,7 @@ public class User {
 	@Id
 	private String email; // email do usuário - é chave primária no banco
 	private String password; // password de acesso
+	private String name; // nome do usuário
 	
 	
 	
@@ -22,10 +23,20 @@ public class User {
 		super();
 	}
 	
-	public User(String email, String password) {
+	public User(String email, String password, String name) {
 		super();
 		this.email = email;
 		this.password = password;
+		this.name = name;
+	}
+	
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 	/**
 	 * @return the email
