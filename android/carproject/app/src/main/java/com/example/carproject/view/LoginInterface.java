@@ -12,7 +12,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 
-import com.example.carproject.controller.APIConnection;
 import com.example.carproject.controller.RetrofitClient;
 import com.example.carproject.controller.UserAPIController;
 import com.example.carproject.model.User;
