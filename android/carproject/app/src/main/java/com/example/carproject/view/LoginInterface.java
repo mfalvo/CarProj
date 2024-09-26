@@ -2,6 +2,7 @@ package com.example.carproject.view;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -12,12 +13,17 @@ import androidx.core.view.WindowInsetsCompat;
 
 
 import com.example.carproject.controller.APIConnection;
+import com.example.carproject.controller.RetrofitClient;
+import com.example.carproject.controller.UserAPIController;
 import com.example.carproject.model.User;
 import com.example.carproject.R;
 
 public class LoginInterface extends AppCompatActivity {
 
-    private final APIConnection apiConnection = new APIConnection();
+    private EditText txtEmail;
+    private EditText txtPassword;
+
+    //private final APIConnection apiConnection = new APIConnection();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,21 +35,33 @@ public class LoginInterface extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        txtEmail = findViewById(R.id.edtEmail);
+        txtPassword = findViewById(R.id.edtPassWord);
+
+
     }
 
     public void getLogin(View view){
-        User user = new User();
 
-        user.setEmail("adriano.alvares@gmail.com");
-        user.setPassword("123");
-        apiConnection.loginUser(user,new APIConnection.LoginUserCallback(){
+
+       String email_user = txtEmail.getText().toString();
+       String password_user = txtPassword.getText().toString();
+
+        RetrofitClient retrofitClient;
+        retrofitClient = new RetrofitClient();
+
+        UserAPIController userAPIController = new UserAPIController(retrofitClient);
+
+        //apiConnection.loginUser(user,new APIConnection.LoginUserCallback(){
+        userAPIController.getLoginUser(email_user, password_user, new UserAPIController.ResponseCallback(){
             @Override
             public void onSuccess(User user) {
                 //textView.setText(user_list.getSupport().getText());
                 AlertDialog.Builder alerta = new AlertDialog.Builder(LoginInterface.this);
                 alerta.setCancelable(false);
                 alerta.setTitle("Login");
-                alerta.setMessage("OK!!!");
+                alerta.setMessage(user.toString());
                 alerta.setNegativeButton("Ok",null);
                 alerta.create().show();
             }
@@ -53,8 +71,8 @@ public class LoginInterface extends AppCompatActivity {
                 AlertDialog.Builder alerta = new AlertDialog.Builder(LoginInterface.this);
                 alerta.setCancelable(false);
                 alerta.setTitle("Login");
-                alerta.setMessage("Nome de usuário ou password com erro!");
-                alerta.setNegativeButton("Ok",null);
+                alerta.setMessage(t.toString());
+                alerta.setNegativeButton("Falouu",null);
                 alerta.create().show();
             }
         });
