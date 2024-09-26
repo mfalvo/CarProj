@@ -10,6 +10,4 @@ interface  UserAPI{
     @POST("/user/login")
     Call<User> loginUser(@Body User user);
 
-    @POST("user/users")
-    Call<String> createUser(@Body User user);
 }

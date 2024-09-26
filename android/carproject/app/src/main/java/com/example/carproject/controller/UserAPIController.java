@@ -1,69 +1,57 @@
 package com.example.carproject.controller;
 
+import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 
 import com.example.carproject.model.User;
 
 import java.util.List;
 
+
+
 public class UserAPIController {
 
+    public static UserAPIController.ResponseCallback ResponseCallback;
     private RetrofitClient retrofitClient;
     private List<User> listUser;
-    private String message;
+    private String status;
+    private User user;
+    private UserAPI userApi;
 
 
-    public UserAPIController(RetrofitClient retrofitClient, UserApi userApi, User user, String message) {
+    public interface ResponseCallback {
+        void onSuccess(User user);
+        void onFailure(Throwable t);
+    }
+
+    public UserAPIController(RetrofitClient retrofitClient) {
         this.retrofitClient = retrofitClient;
-        this.userApi = RetrofitClient.getRetrofitInstance().create(UserApi.class);;
-        this.user = user;
-        this.message = message;
+        this.userApi = RetrofitClient.getRetrofitInstance().create(UserAPI.class);
+        this.status = "";
     }
-
-    public RetrofitClient getRetrofitClient() {
-        return retrofitClient;
-    }
-
-    public void setRetrofitClient(RetrofitClient retrofitClient) {
-        this.retrofitClient = retrofitClient;
-    }
-
-
-
-
-
-
-
 
     public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+        return status;
     }
 
 
-    public void getAlunoByEmailAndPassword
 
-    AlunoApi alunoApi =
-    //Call<Aluno> call = alunoApi.getAlunoByEmail(email);
-    Call<Aluno> call = alunoApi.getAlunoByEmailAndPassword(email,senha);
-                call.enqueue(new Callback<Aluno>() {
-        @Override
-        public void onResponse(Call<Aluno> call, Response<Aluno> response) {
-            if (response.isSuccessful() && response.body() != null) {
-                Aluno aluno = response.body();
-                resultTextView.setText("Nome: " + aluno.getNome());
-            } else {
-                resultTextView.setText("Email não encontrado");
+    public void getLoginUser(String email, String password, UserAPIController.ResponseCallback responseCallback) {
+
+        User user = new User(email, password, "");
+
+        Call<User> call = this.userApi.loginUser(user);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                responseCallback.onSuccess(response.body());
             }
-        }
-
-        @Override
-        public void onFailure(Call<Aluno> call, Throwable t) {
-            resultTextView.setText("Erro: " + t.getMessage());
-        }
-    });
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                responseCallback.onFailure(new Exception("Request failed"));
+            }
+        });
+    }
 }
