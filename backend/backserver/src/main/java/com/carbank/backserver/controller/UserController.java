@@ -34,15 +34,16 @@ public class UserController {
 	
 	
 	@PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
+    public User loginUser(@RequestBody User user) {
         User foundUser = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
 
         if (foundUser != null)
         {
-            return ResponseEntity.ok("Login successful");
+            return foundUser;
         } else 
         {
-            return ResponseEntity.status(401).body("Invalid credentials");
+        	User emptyUser = new User();
+            return emptyUser;
         }
     }
 }
